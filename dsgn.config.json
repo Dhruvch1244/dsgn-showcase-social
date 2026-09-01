@@ -1,0 +1,136 @@
+{
+  "$schema": "https://design.dhruvchoudhary.com/schema/config.json",
+  "componentsDir": "components/dsgn",
+  "utilsDir": "lib",
+  "alias": "@",
+  "installed": {
+    "lib/utils.ts": {
+      "item": "utils",
+      "hash": "sha256:3d4aea869f939c39d35f17b0ebc6b393f88b76c1608ef9d953d51a62aee32f50"
+    },
+    "components/dsgn/button.tsx": {
+      "item": "button",
+      "hash": "sha256:65d104acd05da6441e8c7529e72f455c65e4e0bb753e29ed038b3bf372fff6de"
+    },
+    "components/dsgn/card.tsx": {
+      "item": "card",
+      "hash": "sha256:e077c489ecea47738ee8dad52b0422bf35ba278d926ec18fc8a194901a491377"
+    },
+    "components/dsgn/badge.tsx": {
+      "item": "badge",
+      "hash": "sha256:5942d808fc0045ea2461cb700c105bbe3032707de6a7239cff84aff69ee06e01"
+    },
+    "components/dsgn/input.tsx": {
+      "item": "input",
+      "hash": "sha256:581bb51417e6a57679e592019cc00bdda638fc7c4ac3e776eb288b54fb6b7061"
+    },
+    "components/dsgn/textarea.tsx": {
+      "item": "textarea",
+      "hash": "sha256:830a34868e35c4f2c64e29a5472342f1919379815e2731215c8c3f1f98c1b229"
+    },
+    "components/dsgn/separator.tsx": {
+      "item": "separator",
+      "hash": "sha256:39059f1bd215c92d6410f42cc8b9424b0759f3586c48c0d131b278dac6bd875b"
+    },
+    "components/dsgn/tooltip.tsx": {
+      "item": "tooltip",
+      "hash": "sha256:e29e8418d02ee4dca8f41c80523b107eee5ebeb58dca1a7c12b2de936fc722e1"
+    },
+    "components/dsgn/avatar.tsx": {
+      "item": "avatar",
+      "hash": "sha256:abb0083e7f90b5570c4f3dc2b4f7bc2554455a46143f0ad95a5d55d6cd0b0139"
+    },
+    "components/dsgn/hover-card.tsx": {
+      "item": "hover-card",
+      "hash": "sha256:2d27db526abe405be2b1e1b86f0d64eaa337e8175d457c56b773c8a5ea506768"
+    },
+    "components/dsgn/tabs.tsx": {
+      "item": "tabs",
+      "hash": "sha256:371c579b6732dbe047b54d26235898919486e5f11f7644a67c53fe791ab0c338"
+    },
+    "components/dsgn/dialog.tsx": {
+      "item": "dialog",
+      "hash": "sha256:9f3411da23dfe58d734cdecf650f89bfbc4361dddb47369b517afab4a4b37be7"
+    },
+    "components/dsgn/sheet.tsx": {
+      "item": "sheet",
+      "hash": "sha256:23fc1a7e9f7e1ebaf8bb7870be775b7a2e34b392ef9419d2e40ea188a17fc278"
+    },
+    "components/dsgn/toast.tsx": {
+      "item": "toast",
+      "hash": "sha256:3b36d7cc2e43ca504f888c58781110f15f4922759cd5fb098a4cb18a2b3adf00"
+    },
+    "components/dsgn/use-toast.ts": {
+      "item": "toast",
+      "hash": "sha256:9b0232be1bd1f1deaf61ca3190ef0f11522427366278cd8d985ed45f54deaca0"
+    },
+    "components/dsgn/toaster.tsx": {
+      "item": "toast",
+      "hash": "sha256:f2453860bff261feb4b7ff4d65d7a91e609c524038fb9526c02ccfc8742c6d7c"
+    },
+    "components/dsgn/popover.tsx": {
+      "item": "popover",
+      "hash": "sha256:a98a4d65de399c96b68b729a6841323cfdd1c89c631cac27dbaf8a95f542cc18"
+    },
+    "components/dsgn/scroll-area.tsx": {
+      "item": "scroll-area",
+      "hash": "sha256:c94ae5f8dd0af9c6117d14f0daac18f4027f43cad018656365140f75829d734b"
+    },
+    "components/dsgn/skeleton.tsx": {
+      "item": "skeleton",
+      "hash": "sha256:367a515069c977eeb94faf60764754096a5e355fff4b192a8f6c13880d847ae3"
+    },
+    "components/dsgn/empty-state.tsx": {
+      "item": "empty-state",
+      "hash": "sha256:210705bcb95c67dcd34692d79eb5ba14abb1f5943d13dc2a7ff41f6907da53f9"
+    },
+    "components/dsgn/toggle.tsx": {
+      "item": "toggle",
+      "hash": "sha256:c3f3afcab3f575c7b127949cb510b1a44bfbaca3b12ddcb3ecbae00415dec980"
+    },
+    "components/dsgn/collapsible.tsx": {
+      "item": "collapsible",
+      "hash": "sha256:1f01e3ca0a10736b6f518e102aff77ef4e89de928dcefe576ba8e4380297dc19"
+    },
+    "components/dsgn/context-menu.tsx": {
+      "item": "context-menu",
+      "hash": "sha256:974990ac2577a63dfadfd5cf876c38d0d5f5854bb7f290690194ee5a623aa861"
+    },
+    "components/dsgn/dropdown-menu.tsx": {
+      "item": "dropdown-menu",
+      "hash": "sha256:bddc8529b480a1a7e2e2301efc8c69661cea2b4f2edb0f71d04fc43aef17667d"
+    },
+    "components/dsgn/switch.tsx": {
+      "item": "switch",
+      "hash": "sha256:e1bee933d9a6af06105b50ce6119e7d1c3e0cc566f96ae5be1085a5c5616913b"
+    },
+    "components/dsgn/progress.tsx": {
+      "item": "progress",
+      "hash": "sha256:7bea3be0b635e101c7ea1bcdedabd7c9f2c495ab9cd216ed3e293a90baa3c8e4"
+    },
+    "components/dsgn/alert-dialog.tsx": {
+      "item": "alert-dialog",
+      "hash": "sha256:666123fb540f17695f2a0c8f65466fb5f9097a82bc29e50965a08ce93de9d56d"
+    },
+    "components/dsgn/select.tsx": {
+      "item": "select",
+      "hash": "sha256:ec29db0e672e16a1e161b8675671476f228ab11bb5297fef5831ec41896cb3c9"
+    },
+    "components/dsgn/radio-group.tsx": {
+      "item": "radio-group",
+      "hash": "sha256:04fd4a04ff92f91e4af721c48fcccd523f9f7b5a52ac5548567dc8f3f4625a2b"
+    },
+    "components/dsgn/alert.tsx": {
+      "item": "alert",
+      "hash": "sha256:f80abe920e0a446eb05f8f012e8f46e52699835f8b4039137f0fba283c040222"
+    },
+    "components/dsgn/checkbox.tsx": {
+      "item": "checkbox",
+      "hash": "sha256:d13a1432637316b3d03368ee533100905901de2d842adc6304804d4f6a2ff578"
+    },
+    "components/dsgn/recipes/notification-list.tsx": {
+      "item": "recipe-notification-list",
+      "hash": "sha256:cee57dc2680c341cf1d43431a77f0a88b50ac71cb3c0509c72d7339b59e1ffd7"
+    }
+  }
+}

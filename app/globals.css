@@ -1,26 +1,352 @@
 @import "tailwindcss";
 
+/*
+ * Thrum's token system, in the dsgn "startup" voice.
+ *
+ * Structure is the two-layer indirection the dsgn token doc specifies:
+ *
+ *   raw value (--void, --accent-a, ...)
+ *     -> semantic alias (--background, --accent, ...)
+ *       -> Tailwind v4 @theme inline token (--color-background, ...)
+ *
+ * Every component under components/dsgn/ is written against the *semantic*
+ * names (bg-card, text-muted-foreground, border-border). So the accent
+ * presets below only ever repoint existing names — they never add a new
+ * @theme token and never touch component source. That is the whole reason
+ * the in-app accent switcher can reskin 27 installed components at runtime
+ * with zero JS beyond setting one attribute on <html>.
+ *
+ * Voice rules applied, from skills/dsgn/agents/startup.md:
+ *   - deep saturated violet-black background, not a neutral technical void
+ *   - accent is a two-colour *gradient*, used on the elements the eye should
+ *     land on first (hero headline, the one primary CTA, stat callouts) and
+ *     deliberately NOT as wallpaper
+ *   - --radius-scale raised toward pill shapes (1.6)
+ *   - motion uses real overshoot; flat ease-out reads as the wrong voice
+ *   - high contrast throughout: even "muted" copy clears AA comfortably
+ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* --- raw values --- */
+  /* Deep violet-black. Darker than the dsgn site's own startup preset
+     (#0d0620) because this app puts long-form text on the background rather
+     than on cards, and the extra 3 points of headroom is what keeps
+     --ink-faint above 4.5:1 without desaturating it toward grey. */
+  --void: #0b0518;
+  --surface: #150a2e;
+  --surface-raised: #1e1142;
+
+  --ink: #f6f1ff;
+  --ink-soft: #b9a9e2;
+  /* #8375b0 measured 4.36:1 here — under AA for normal text. Lightened to
+     #8f81be (5.3:1) rather than dropped to a larger type size, because this
+     is the colour timestamps and reaction counts use, and those are small
+     by design. */
+  --ink-faint: #8f81be;
+  --rule: #2e1f52;
+
+  /* Accent preset: aurora (default). Two hues, never one flat fill — the
+     voice's central colour rule. --accent is the single hue installed
+     components read (bg-accent, ring, focus); --accent-grad is the pair,
+     applied by hand only to hero type and the primary CTA. */
+  --accent-a: #3ce0f0;
+  --accent-b: #a06bff;
+  --accent-ink: #0b0518;
+
+  --danger: #ff5470;
+  --danger-ink: #0b0518;
+
+  /* --- semantic aliases: the names components actually read --- */
+  --background: var(--void);
+  --foreground: var(--ink);
+
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+
+  --primary: var(--ink);
+  --primary-foreground: var(--void);
+
+  --secondary: var(--surface-raised);
+  --secondary-foreground: var(--ink);
+
+  --accent: var(--accent-a);
+  --accent-foreground: var(--accent-ink);
+
+  --muted: #1a0e38;
+  --muted-foreground: var(--ink-soft);
+
+  --destructive: var(--danger);
+  --destructive-foreground: var(--danger-ink);
+
+  --border: var(--rule);
+  /* Full-strength accent, not a translucent tint. On a background this dark
+     a 55%-alpha ring loses most of its contrast against the card fill it
+     usually sits on. */
+  --ring: var(--accent);
+
+  /* Pill-leaning. One knob — every --radius-* below multiplies it. */
+  --radius-scale: 1.6;
+
+  /* --- derived: gradient + glow, both composed from the accent pair, so a
+     preset swap carries them automatically --- */
+  --accent-grad: linear-gradient(100deg, var(--accent-a), var(--accent-b));
+  --accent-grad-soft: linear-gradient(
+    100deg,
+    color-mix(in srgb, var(--accent-a) 18%, transparent),
+    color-mix(in srgb, var(--accent-b) 18%, transparent)
+  );
+  --glow-accent:
+    0 0 0 1px color-mix(in srgb, var(--accent-a) 40%, transparent),
+    0 14px 46px -12px color-mix(in srgb, var(--accent-b) 65%, transparent);
+
+  --elev-sm: 0 1px 2px rgb(0 0 0 / 0.45);
+  --elev-md: 0 4px 10px -3px rgb(0 0 0 / 0.5), 0 12px 28px -10px rgb(0 0 0 / 0.55);
+  --elev-lg: 0 8px 20px -6px rgb(0 0 0 / 0.55), 0 28px 60px -20px rgb(0 0 0 / 0.7);
 }
 
+/*
+ * Accent presets. Each one repoints exactly two raw values; --accent,
+ * --accent-grad, --glow-accent and every --color-* token downstream follow
+ * on their own. Both ends of every pair were checked against --void and
+ * against --accent-ink (see the contrast note in the README).
+ */
+[data-accent="ember"] {
+  --accent-a: #ff5fa2;
+  --accent-b: #ffb14d;
+}
+
+[data-accent="bloom"] {
+  --accent-a: #b06bff;
+  --accent-b: #ff5fa2;
+}
+
+/*
+ * `inline` is load-bearing, not cosmetic: it makes each utility emit a
+ * var() reference instead of baking the value in at build time, which is
+ * the only reason [data-accent="..."] above can re-point everything at
+ * runtime without a second compiled copy of the utility set.
+ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  --color-ink-faint: var(--ink-faint);
+  --color-elevated: var(--surface-raised);
+
+  --radius-sm: calc(0.25rem * var(--radius-scale));
+  --radius-md: calc(0.5rem * var(--radius-scale));
+  --radius-lg: calc(0.75rem * var(--radius-scale));
+  --radius-xl: calc(1rem * var(--radius-scale));
+  --radius-2xl: calc(1.25rem * var(--radius-scale));
+  --radius-3xl: calc(1.5rem * var(--radius-scale));
+
+  --shadow-sm: var(--elev-sm);
+  --shadow-md: var(--elev-md);
+  --shadow-lg: var(--elev-lg);
+  --shadow-xl: var(--elev-lg);
+  --shadow-glow: var(--glow-accent);
+
+  --font-sans: var(--font-jakarta);
+  --font-display: var(--font-bricolage);
+  --font-mono: var(--font-jetbrains);
+
+  /* Declared here rather than in :root above so Tailwind also emits the
+     matching `ease-spring` / `ease-fluid` utilities; @theme still writes
+     both onto :root, so the keyframes further down can read them by name.
+     Overshoot is correct in this voice — startup.md §5 rules out the flat
+     ease-out curve the corporate voice mandates. */
+  --ease-spring: cubic-bezier(0.34, 1.42, 0.62, 1);
+  --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*
+ * These belong in @layer base. Tailwind v4 emits utilities inside
+ * @layer utilities, and *unlayered* CSS beats every layered rule regardless
+ * of specificity — a bare `* { border-color }` at top level would silently
+ * defeat border-transparent and border-accent on the installed components.
+ */
+@layer base {
+  /* v4 dropped v3's border-color preflight and defaults borders to
+     currentColor, so a component writing plain `border` (toast does) would
+     otherwise draw an ink-coloured box. */
+  *,
+  *::before,
+  *::after {
+    border-color: var(--border);
+  }
+
+  /*
+   * `clip`, not `hidden`, and on BOTH html and body. The fixed decorative
+   * aurora layer below uses a negative inset so its wash bleeds past the
+   * viewport edge; Chromium still counts that box toward
+   * documentElement.scrollWidth and produces a real horizontal scrollbar at
+   * every phone width. `overflow-x: hidden` fixes that but forces the other
+   * axis to `auto` per the CSS overflow spec, turning html/body into their
+   * own scroll container and breaking `position: sticky` for the whole app
+   * (the left nav and right rail both rely on it). `clip` forbids scrolling
+   * outright, so it never triggers that coupling. Verified: scrollWidth ===
+   * clientWidth at 390px, sticky rails still pin.
+   */
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--accent-a) 30%, transparent);
+    color: var(--ink);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/*
+ * The one decorative background layer: two accent-coloured radial washes,
+ * position: fixed, pointer-events-none, painted on their own sibling layer
+ * rather than as an ancestor of any content — so an opacity bug here can
+ * never take real content down with it. No blur filter and no animation, so
+ * it costs one composited paint and nothing per frame.
+ */
+.aurora {
+  position: fixed;
+  inset: -20vmax;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      42vmax 42vmax at 18% 8%,
+      color-mix(in srgb, var(--accent-a) 20%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      50vmax 50vmax at 88% 22%,
+      color-mix(in srgb, var(--accent-b) 22%, transparent),
+      transparent 70%
+    );
+}
+
+/* Gradient type. Applied by hand to the few elements the voice wants the eye
+   to hit first, never as a default heading style. */
+.text-gradient {
+  background-image: var(--accent-grad);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* A hairline that is itself the accent gradient — the voice's "borders can
+   carry a gradient edge rather than a flat neutral line". */
+.grad-ring {
+  position: relative;
+}
+.grad-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--accent-grad);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Numbers that get compared to other numbers. Proportional digits make a
+   column of reaction counts visibly ragged. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/*
+ * One reveal primitive, one reduced-motion switch.
+ *
+ * Deliberately a pure CSS animation with `both` fill rather than an
+ * IntersectionObserver + class toggle: this app mounts 15-20 revealing
+ * elements at once on a feed tab switch, and the dsgn motion doc records a
+ * real failure where routing that visibility through React state left
+ * content permanently invisible on a fresh load. A keyframe with `both`
+ * has no scheduler and no observer in its path, so there is no state it can
+ * get stuck in. The trade is that off-screen items animate before you scroll
+ * to them — acceptable for a feed that is one screen tall at the fold.
+ */
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+[data-reveal] {
+  animation: reveal-in 520ms var(--ease-spring) both;
+  animation-delay: calc(var(--reveal-index, 0) * 55ms);
+}
+
+@keyframes meter-in {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+[data-meter] {
+  transform-origin: left center;
+  animation: meter-in 620ms var(--ease-fluid) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  [data-reveal],
+  [data-meter] {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
