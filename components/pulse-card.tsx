@@ -201,15 +201,21 @@ export function PulseCard({
                       aria-label="Verified maker"
                     />
                   )}
-                  <span className="truncate font-mono text-xs text-ink-faint">
-                    @{author.handle}
+                  {/* Handle, separator and timestamp wrap as one unit. Split
+                      across three flex children, the separator strands itself
+                      at the end of a line at phone widths and reads as a typo
+                      rather than a divider. */}
+                  <span className="inline-flex min-w-0 items-baseline gap-1.5">
+                    <span className="truncate font-mono text-xs text-ink-faint">
+                      @{author.handle}
+                    </span>
+                    <span aria-hidden="true" className="shrink-0 text-ink-faint">
+                      ·
+                    </span>
+                    <time className="shrink-0 font-mono text-xs tabular-nums text-ink-faint">
+                      {relativeTime(pulse.minutesAgo)}
+                    </time>
                   </span>
-                  <span aria-hidden="true" className="text-ink-faint">
-                    ·
-                  </span>
-                  <time className="font-mono text-xs tabular-nums text-ink-faint">
-                    {relativeTime(pulse.minutesAgo)}
-                  </time>
                 </div>
                 {room && (
                   <button

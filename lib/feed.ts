@@ -396,6 +396,52 @@ const PULSES: Pulse[] = [
     streams: ["for-you", "following", "rooms"],
     replies: [],
   },
+  /*
+   * The viewer's own two pulses. They carry only the "rooms" stream, never
+   * "for-you" or "following" — your own posts showing up in your own
+   * recommendation feed is a bug in every real product that has shipped it,
+   * and a profile whose Pulses tab is an empty state is a worse first
+   * impression than one with two real posts on it.
+   */
+  {
+    id: "p8",
+    author: "rune",
+    room: "night-shift",
+    minutesAgo: 210,
+    body: "The answering machine has four heads and I have spent two weeks assuming the manual was right about which one is the playback. It was not. Two weeks. The manual is a 1978 photocopy of a 1976 manual for a different unit.",
+    sparks: 2140,
+    echoes: 305,
+    sparked: false,
+    streams: ["rooms"],
+    replies: [
+      {
+        id: "p8r1",
+        author: "solder_witch",
+        minutesAgo: 190,
+        body: "every service manual from that decade is a photocopy of a different machine. trace it yourself, always.",
+        sparks: 418,
+      },
+      {
+        id: "p8r2",
+        author: "grommet",
+        minutesAgo: 150,
+        body: "two weeks is fast for that failure. I lost a month to a wiring diagram that had two pins swapped.",
+        sparks: 96,
+      },
+    ],
+  },
+  {
+    id: "p9",
+    author: "rune",
+    room: "synth-diy",
+    minutesAgo: 1180,
+    body: "Bench rule I keep relearning: if it works at 3am, do not touch it until you have written down why it works. I have now rebuilt the same filter stage four times because past me was confident and undocumented.",
+    sparks: 890,
+    echoes: 141,
+    sparked: false,
+    streams: ["rooms"],
+    replies: [],
+  },
 ];
 
 const NOTIFICATIONS: Notification[] = [

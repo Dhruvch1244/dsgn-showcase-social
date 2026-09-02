@@ -194,6 +194,25 @@
   *::before,
   *::after {
     border-color: var(--border);
+
+    /*
+     * Focus-ring offset, retargeted to the page background.
+     *
+     * Tailwind registers --tw-ring-offset-color through
+     * `@property { inherits: false; initial-value: #fff }`, so a value set on
+     * :root does NOT cascade — it has to be declared on every element, which
+     * is why it lives in this rule rather than up with the other tokens.
+     *
+     * Left at the default, every registry component that writes
+     * `ring-offset-2` (button, input, textarea, tabs, select, switch, badge,
+     * checkbox) paints a solid 2px WHITE band between the control and its
+     * accent ring. On the corporate voice's near-white page that is invisible;
+     * on a near-black one it is a bright halo around every focused control.
+     * Measured, not assumed: getComputedStyle on a focused Textarea resolved
+     * --tw-ring-offset-color to `#fff` and composed
+     * `rgb(255,255,255) 0 0 0 2px, rgb(60,224,240) 0 0 0 4px`.
+     */
+    --tw-ring-offset-color: var(--background);
   }
 
   /*
